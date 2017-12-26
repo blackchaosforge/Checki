@@ -1,0 +1,991 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{??????? ?? ??}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{1 - Что такое объект, целевая переменная, признак, модель,
+функционал ошибки и
+обучение?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux43eux431ux44aux435ux43aux442-ux446ux435ux43bux435ux432ux430ux44f-ux43fux435ux440ux435ux43cux435ux43dux43dux430ux44f-ux43fux440ux438ux437ux43dux430ux43a-ux43cux43eux434ux435ux43bux44c-ux444ux443ux43dux43aux446ux438ux43eux43dux430ux43b-ux43eux448ux438ux431ux43aux438-ux438-ux43eux431ux443ux447ux435ux43dux438ux435}
+
+\emph{Объекты} - некие абстрактные сущности, которыми компьютеры не
+умеют оперировать напрямую
+
+\emph{Целевой переменной} называется величина, которую мы хотим
+определить
+
+\emph{Признаки (факторы)} - некоторые наборы характеристик, описывающие
+объект
+
+\emph{Модель} - функция (алгоритм), которая для любого объекта будет
+предсказывать ответ
+
+\emph{Функционал ошибки (качества)} - измеряет качество работы
+алгоритма, его следует минимизировать
+
+\emph{Обучение} - процесс поиска идеального алгоритма (модели)
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{2 - Запишите формулы для линейной модели регрессии и для
+среднеквадратичной ошибки. Запишите среднеквадратичную ошибку в
+матричном
+виде.}\label{ux437ux430ux43fux438ux448ux438ux442ux435-ux444ux43eux440ux43cux443ux43bux44b-ux434ux43bux44f-ux43bux438ux43dux435ux439ux43dux43eux439-ux43cux43eux434ux435ux43bux438-ux440ux435ux433ux440ux435ux441ux441ux438ux438-ux438-ux434ux43bux44f-ux441ux440ux435ux434ux43dux435ux43aux432ux430ux434ux440ux430ux442ux438ux447ux43dux43eux439-ux43eux448ux438ux431ux43aux438.-ux437ux430ux43fux438ux448ux438ux442ux435-ux441ux440ux435ux434ux43dux435ux43aux432ux430ux434ux440ux430ux442ux438ux447ux43dux443ux44e-ux43eux448ux438ux431ux43aux443-ux432-ux43cux430ux442ux440ux438ux447ux43dux43eux43c-ux432ux438ux434ux435.}
+
+\[A = {a(x) = w_0 + w_1x_1 + · · · + w_dx_d |w_0, w_1, . . . , w_d ∈ R}\],
+\[Q(a, X) = \frac{1}{ℓ}\sum_{i=1}^ℓ(a(x_i) − y_i)^2\]
+
+Матричный вид - \(\frac{1}{ℓ} ||X_w - y||^2\)
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{3 - Что такое коэффициент детерминации? Как интерпретировать
+его
+значения?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux43aux43eux44dux444ux444ux438ux446ux438ux435ux43dux442-ux434ux435ux442ux435ux440ux43cux438ux43dux430ux446ux438ux438-ux43aux430ux43a-ux438ux43dux442ux435ux440ux43fux440ux435ux442ux438ux440ux43eux432ux430ux442ux44c-ux435ux433ux43e-ux437ux43dux430ux447ux435ux43dux438ux44f}
+
+\emph{Коэффициент детерминации} измеряет долю дисперсии, объяснённую
+моделью, в общей дисперсии целевой переменной. Фактически, данная мера
+качества --- это нормированная среднеквадратичная ошибка. Если она
+близка к единице, то модель хорошо объясняет данные, если же она близка
+к нулю, то прогнозы сопоставимы по качеству с константным предсказанием.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{4 - Что такое градиент? Какое его свойство используется при
+минимизации
+функций?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux433ux440ux430ux434ux438ux435ux43dux442-ux43aux430ux43aux43eux435-ux435ux433ux43e-ux441ux432ux43eux439ux441ux442ux432ux43e-ux438ux441ux43fux43eux43bux44cux437ux443ux435ux442ux441ux44f-ux43fux440ux438-ux43cux438ux43dux438ux43cux438ux437ux430ux446ux438ux438-ux444ux443ux43dux43aux446ux438ux439}
+
+\emph{Градиентом} функции \(f : R^{d} → R\) называется вектор его
+частных производных. Градиент является направлением наискорейшего роста
+функции, а антиградиент (т.е. \(−\nabla f\)) --- направлением
+наискорейшего убывания. Это ключевое свойство градиента, обосновывающее
+его использование в методах оптимизации.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{5 - Запишите формулу для одного шага градиентного спуска. Какие
+способы оценивания градиента вы знаете? Почему не всегда можно
+использовать полный градиентный
+спуск?}\label{ux437ux430ux43fux438ux448ux438ux442ux435-ux444ux43eux440ux43cux443ux43bux443-ux434ux43bux44f-ux43eux434ux43dux43eux433ux43e-ux448ux430ux433ux430-ux433ux440ux430ux434ux438ux435ux43dux442ux43dux43eux433ux43e-ux441ux43fux443ux441ux43aux430.-ux43aux430ux43aux438ux435-ux441ux43fux43eux441ux43eux431ux44b-ux43eux446ux435ux43dux438ux432ux430ux43dux438ux44f-ux433ux440ux430ux434ux438ux435ux43dux442ux430-ux432ux44b-ux437ux43dux430ux435ux442ux435-ux43fux43eux447ux435ux43cux443-ux43dux435-ux432ux441ux435ux433ux434ux430-ux43cux43eux436ux43dux43e-ux438ux441ux43fux43eux43bux44cux437ux43eux432ux430ux442ux44c-ux43fux43eux43bux43dux44bux439-ux433ux440ux430ux434ux438ux435ux43dux442ux43dux44bux439-ux441ux43fux443ux441ux43a}
+
+\[w^{(k+1)} = w^{(k)} - \eta_k \nabla Q(w^{(k)}),\]
+
+Оценить градиент суммы функций можно градиентом одного случайно взятого
+слагаемого: \(\nabla_wQ(w) ≈ \nabla_wq_{i_k}(w)\) (получится метод
+стохастического градиентного спуска)
+
+Можно повысить точность оценки градиента, используя несколько слагаемых
+вместо одного:
+\(\nabla_wQ(w) ≈ \frac{1}{n} \sum_{j=1}^n\nabla_wq_{i_{k_j}}(w)\)
+
+Средний стохастический градиент - Оценка градиента вычисляется как
+среднее вспомогательных переменных --- то есть мы используем все
+слагаемые, как в полном градиенте, но при этом почти все слагаемые
+берутся с предыдущих шагов, а не пересчитываются:
+\(\nabla_wQ(w)≈ \frac{1}{ℓ}\sum_{i=1}^ℓz^{(k)}_i\) Наконец, делается
+градиентный шаг:
+\[w^{(k)} = w^{(k−1)} − η_k\frac{1}{ℓ}\sum_{i=1}^ℓz^{(k)}_i\]
+
+Можно делать оценку без вычисления каких-либо градиентов --- достаточно
+взять случайный вектор u на единичной сфере и домножить его на значение
+функции в данном направлении: \(\nabla_wQ(w) = Q(w + δu)u\)
+
+\emph{Не всегда можно использовать полный градиентный спуск} - да
+пребудет с вами Кэп!
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{6 - Что такое кросс-валидация? На что влияет количество блоков
+в
+кросс-валидации?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux43aux440ux43eux441ux441-ux432ux430ux43bux438ux434ux430ux446ux438ux44f-ux43dux430-ux447ux442ux43e-ux432ux43bux438ux44fux435ux442-ux43aux43eux43bux438ux447ux435ux441ux442ux432ux43e-ux431ux43bux43eux43aux43eux432-ux432-ux43aux440ux43eux441ux441-ux432ux430ux43bux438ux434ux430ux446ux438ux438}
+
+\emph{Кросс-валидация} - Размеченные данные разбиваются на \(k\) блоков
+\(X1,...,Xk\) примерно одинакового размера. Затем обучается \(k\)
+моделей \(a1(x),...,ak(x)\), причём \(i\)-я модель обучается на объектах
+из всех блоков, кроме блока \(i\). После этого качество каждой модели
+оценивается по тому блоку, который не участвовал в её обучении, и
+результаты усредняются: \[CV = \frac{1}{k}\sum_{i=1}^kQ (a_i(x), X_i)\]
+
+Количество блоков - ...
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{7 - Чем гиперпараметры отличаются от параметров? Что является
+параметрами и гиперпараметрами в линейных моделях и в решающих
+деревьях?}\label{ux447ux435ux43c-ux433ux438ux43fux435ux440ux43fux430ux440ux430ux43cux435ux442ux440ux44b-ux43eux442ux43bux438ux447ux430ux44eux442ux441ux44f-ux43eux442-ux43fux430ux440ux430ux43cux435ux442ux440ux43eux432-ux447ux442ux43e-ux44fux432ux43bux44fux435ux442ux441ux44f-ux43fux430ux440ux430ux43cux435ux442ux440ux430ux43cux438-ux438-ux433ux438ux43fux435ux440ux43fux430ux440ux430ux43cux435ux442ux440ux430ux43cux438-ux432-ux43bux438ux43dux435ux439ux43dux44bux445-ux43cux43eux434ux435ux43bux44fux445-ux438-ux432-ux440ux435ux448ux430ux44eux449ux438ux445-ux434ux435ux440ux435ux432ux44cux44fux445}
+
+\emph{Параметрами} называют величины, которые настраиваются по обучающей
+выборки --- например, веса в линейной регрессии. К
+\emph{гиперпараметрам} относят величины, которые контролируют сам
+процесс обучения и не могут быть подобраны по обучающей выборке.
+
+В линейных моделях - коэффициенты регуляризации
+
+В решающих деревьях - критерии останова, параметр \(a\) в "стрижке"
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{8 - Что такое регуляризация? Запишите L1- и L2-регуляризаторы.
+Почему L1-регуляризация отбирает
+признаки?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux440ux435ux433ux443ux43bux44fux440ux438ux437ux430ux446ux438ux44f-ux437ux430ux43fux438ux448ux438ux442ux435-l1--ux438-l2-ux440ux435ux433ux443ux43bux44fux440ux438ux437ux430ux442ux43eux440ux44b.-ux43fux43eux447ux435ux43cux443-l1-ux440ux435ux433ux443ux43bux44fux440ux438ux437ux430ux446ux438ux44f-ux43eux442ux431ux438ux440ux430ux435ux442-ux43fux440ux438ux437ux43dux430ux43aux438}
+
+\emph{Регуляризация} - штраф нормы векторов коэффициентов (обычно),
+который вводится для контроля сложности модели
+
+\emph{L-1} - \(R(w) = ||w||_2 = \sum_{i=1}^dw_i^2\)
+
+\emph{L-2} - \(R(w) = ||w||_1 = \sum_{i=1}^d|w_i|\)
+
+\emph{Отбор признаков L-1} - ...
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{9 - Запишите формулу для линейной модели классификации. Что
+такое отступ? Как обучаются линейные классификаторы и для чего нужны
+верхние оценки пороговой функции
+потерь?}\label{ux437ux430ux43fux438ux448ux438ux442ux435-ux444ux43eux440ux43cux443ux43bux443-ux434ux43bux44f-ux43bux438ux43dux435ux439ux43dux43eux439-ux43cux43eux434ux435ux43bux438-ux43aux43bux430ux441ux441ux438ux444ux438ux43aux430ux446ux438ux438.-ux447ux442ux43e-ux442ux430ux43aux43eux435-ux43eux442ux441ux442ux443ux43f-ux43aux430ux43a-ux43eux431ux443ux447ux430ux44eux442ux441ux44f-ux43bux438ux43dux435ux439ux43dux44bux435-ux43aux43bux430ux441ux441ux438ux444ux438ux43aux430ux442ux43eux440ux44b-ux438-ux434ux43bux44f-ux447ux435ux433ux43e-ux43dux443ux436ux43dux44b-ux432ux435ux440ux445ux43dux438ux435-ux43eux446ux435ux43dux43aux438-ux43fux43eux440ux43eux433ux43eux432ux43eux439-ux444ux443ux43dux43aux446ux438ux438-ux43fux43eux442ux435ux440ux44c}
+
+\[a(x) = sign (<w, x> + w_0) = sign(\sum_{j=1}^dw_jx_j + w_0)\]
+
+\emph{Отступ} - расстояние от разделяющей плоскости до объекта
+\(M_i = y_i<w, x_i>\) Знак отступа говорит о корректности ответа
+классификатора (положительный отступ соответствует правильному ответу,
+отрицательный - неправильному), а его абсолютная величина характеризует
+степень уверенности классификатора в своём ответе.
+
+\emph{Обучение классификатора} - ...
+
+\emph{Верхние оценки} - Если верхняя оценка \(L˜(M)\) является гладкой,
+то и данная верхняя оценка будет гладкой. В этом случае её можно будет
+минимизировать с помощью, например, градиентного спуска. Если верхнюю
+оценку удастся приблизить к нулю, то и доля неправильных ответов тоже
+будет близка к нулю.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{10 - Что такое точность, полнота и
+F-мера?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux442ux43eux447ux43dux43eux441ux442ux44c-ux43fux43eux43bux43dux43eux442ux430-ux438-f-ux43cux435ux440ux430}
+
+\emph{Точность} показывает, какая доля объектов, выделенных
+классификатором как положительные, действительно является
+положительными.
+
+\emph{Полнота} показывает, какая часть положительных объектов была
+выделена классификатором.
+
+\emph{F-мера} - гармоническое среднее точности и полноты, близко к нулю,
+если хотя бы один из аргументов близок к нулю. Похоже на сглаженный
+вариант минимума, но при этом оно менее устойчиво к «выбросам».
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{11 - Что такое AUC-ROC? Опишите алгоритм построения
+ROC-кривой.}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-auc-roc-ux43eux43fux438ux448ux438ux442ux435-ux430ux43bux433ux43eux440ux438ux442ux43c-ux43fux43eux441ux442ux440ux43eux435ux43dux438ux44f-roc-ux43aux440ux438ux432ux43eux439.}
+
+\emph{AUC-ROC} - площадь под ROC-кривой в двумерном пространстве, где
+координатами выступают \(FPR = \frac{FP}{FP+TN}\) и
+\(TPR = \frac{TP}{TP+TN}\). Чем лучше работает выборка - тем ближе
+AUC-ROC к 1. При случайной выборке, он устремляется к 0.5.
+
+ROC-кривая строится "ступенчато", в зависимости от того, будет следующий
+объект выборки определен верно (вверх) или неверно (вправо).
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{12 - Запишите функционал логистической регрессии. Как он связан
+с методом максимума
+правдоподобия?}\label{ux437ux430ux43fux438ux448ux438ux442ux435-ux444ux443ux43dux43aux446ux438ux43eux43dux430ux43b-ux43bux43eux433ux438ux441ux442ux438ux447ux435ux441ux43aux43eux439-ux440ux435ux433ux440ux435ux441ux441ux438ux438.-ux43aux430ux43a-ux43eux43d-ux441ux432ux44fux437ux430ux43d-ux441-ux43cux435ux442ux43eux434ux43eux43c-ux43cux430ux43aux441ux438ux43cux443ux43cux430-ux43fux440ux430ux432ux434ux43eux43fux43eux434ux43eux431ux438ux44f}
+
+Функционал стремится к матожиданию ошибки:
+\(arg min_{b∈R}E[L(y, b)| x] = p(y = +1 | x)\)
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{13 - Запишите задачу метода опорных векторов для линейно
+неразделимого случая. Как функционал этой задачи связан с отступом
+классификатора?}\label{ux437ux430ux43fux438ux448ux438ux442ux435-ux437ux430ux434ux430ux447ux443-ux43cux435ux442ux43eux434ux430-ux43eux43fux43eux440ux43dux44bux445-ux432ux435ux43aux442ux43eux440ux43eux432-ux434ux43bux44f-ux43bux438ux43dux435ux439ux43dux43e-ux43dux435ux440ux430ux437ux434ux435ux43bux438ux43cux43eux433ux43e-ux441ux43bux443ux447ux430ux44f.-ux43aux430ux43a-ux444ux443ux43dux43aux446ux438ux43eux43dux430ux43b-ux44dux442ux43eux439-ux437ux430ux434ux430ux447ux438-ux441ux432ux44fux437ux430ux43d-ux441-ux43eux442ux441ux442ux443ux43fux43eux43c-ux43aux43bux430ux441ux441ux438ux444ux438ux43aux430ux442ux43eux440ux430}
+
+(Система):
+
+\(\frac{1}{2}||w||^2 + C\sum_{i=1}^ℓξ_i → min(w,b,ξ) ,\)
+
+\(y_i (<w, x_i> + b) >= 1 − ξ_i , i = 1,...,ℓ ,\)
+
+\(ξ_i >= 0, i = 1,...,ℓ .\)
+
+Если отступ объекта лежит между нулем и единицей
+\(0 < y_i (<w, x_i> + b) < 1\) то объект верно классифицируется, но
+имеет ненулевой штраф \(ξ > 0\). Таким образом, мы штрафуем объекты за
+попадание внутрь разделяющей полосы.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{14 - В чём заключаются one-vs-all и all-vs-all подходы в
+многоклассовой
+классификации?}\label{ux432-ux447ux451ux43c-ux437ux430ux43aux43bux44eux447ux430ux44eux442ux441ux44f-one-vs-all-ux438-all-vs-all-ux43fux43eux434ux445ux43eux434ux44b-ux432-ux43cux43dux43eux433ux43eux43aux43bux430ux441ux441ux43eux432ux43eux439-ux43aux43bux430ux441ux441ux438ux444ux438ux43aux430ux446ux438ux438}
+
+\emph{one-versus-all} - каждому классификатору соответствует
+определенный класс объектов. Класс нового объекта определяется самым
+уверенным классификатором.
+
+\emph{all-versus-all} - классификаторы обучаются распознавать несколько
+классы объектов, при определении класса нового объекта, проводится
+"голосование" среди классификаторов.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{15 - В чём заключается подход с независимой классификацией в
+задаче классификации с пересекающимися
+классами?}\label{ux432-ux447ux451ux43c-ux437ux430ux43aux43bux44eux447ux430ux435ux442ux441ux44f-ux43fux43eux434ux445ux43eux434-ux441-ux43dux435ux437ux430ux432ux438ux441ux438ux43cux43eux439-ux43aux43bux430ux441ux441ux438ux444ux438ux43aux430ux446ux438ux435ux439-ux432-ux437ux430ux434ux430ux447ux435-ux43aux43bux430ux441ux441ux438ux444ux438ux43aux430ux446ux438ux438-ux441-ux43fux435ux440ux435ux441ux435ux43aux430ux44eux449ux438ux43cux438ux441ux44f-ux43aux43bux430ux441ux441ux430ux43cux438}
+
+\emph{Независимая классификация} - предположим, что все классы
+независимы, и будем определять принадлежность объекта к каждому
+отдельным классификатором. Основная проблема данного подхода состоит в
+том, что никак не учитываются возможные связи между отдельными классами.
+Тем не менее, такие связи могут иметь место быть.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{16 - В чём заключается преобразование категориальных признаков
+в вещественные с помощью счётчиков? Почему использование счётчиков может
+привести к переобучению? Какие методы борьбы с этой проблемой счётчиков
+вам
+известны?}\label{ux432-ux447ux451ux43c-ux437ux430ux43aux43bux44eux447ux430ux435ux442ux441ux44f-ux43fux440ux435ux43eux431ux440ux430ux437ux43eux432ux430ux43dux438ux435-ux43aux430ux442ux435ux433ux43eux440ux438ux430ux43bux44cux43dux44bux445-ux43fux440ux438ux437ux43dux430ux43aux43eux432-ux432-ux432ux435ux449ux435ux441ux442ux432ux435ux43dux43dux44bux435-ux441-ux43fux43eux43cux43eux449ux44cux44e-ux441ux447ux451ux442ux447ux438ux43aux43eux432-ux43fux43eux447ux435ux43cux443-ux438ux441ux43fux43eux43bux44cux437ux43eux432ux430ux43dux438ux435-ux441ux447ux451ux442ux447ux438ux43aux43eux432-ux43cux43eux436ux435ux442-ux43fux440ux438ux432ux435ux441ux442ux438-ux43a-ux43fux435ux440ux435ux43eux431ux443ux447ux435ux43dux438ux44e-ux43aux430ux43aux438ux435-ux43cux435ux442ux43eux434ux44b-ux431ux43eux440ux44cux431ux44b-ux441-ux44dux442ux43eux439-ux43fux440ux43eux431ux43bux435ux43cux43eux439-ux441ux447ux451ux442ux447ux438ux43aux43eux432-ux432ux430ux43c-ux438ux437ux432ux435ux441ux442ux43dux44b}
+
+Значения категориального признака нужны не сами по себе, а лишь для
+предсказания класса. Соответственно, если два возможных значения ui и uj
+характерны для одного и того же класса, можно их не различать. По сути,
+мы посчитаем количество объектов с данным значением признака, а также
+количество объектов различных классов среди них.
+
+Риск столкнуться с переобучением из-за «утечки» целевой переменной в
+значения признаков (аналогично стекингу).
+
+Чтобы избежать переобучения, как правило, пользуются подходом,
+аналогичным кросс-валидации. Можно вычислять несколько счётчиков для
+разных значений параметров.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{17 - Опишите жадный алгоритм обучения решающего
+дерева.}\label{ux43eux43fux438ux448ux438ux442ux435-ux436ux430ux434ux43dux44bux439-ux430ux43bux433ux43eux440ux438ux442ux43c-ux43eux431ux443ux447ux435ux43dux438ux44f-ux440ux435ux448ux430ux44eux449ux435ux433ux43e-ux434ux435ux440ux435ux432ux430.}
+
+Начнем со всей обучающей выборки X и найдем наилучшее ее разбиение на
+две части \(R1(j, t) = {x | x_j < t}\) и \(R2(j, t) = {x | x_j > t}\) с
+точки зрения заранее заданного функционала качества \(Q(X, j, t)\).
+Найдя наилучшие значения \(j\) и \(t\), создадим корневую вершину
+дерева, поставив ей в соответствие предикат \([x_j < t]\). Объекты
+разобьются на две части --- одни попадут в левое поддерево, другие в
+правое. Для каждой из этих подвыборок рекурсивно повторим процедуру,
+построив дочерние вершины для корневой, и так далее. В каждой вершине мы
+проверяем, не выполнилось ли некоторое условие останова --- и если
+выполнилось, то прекращаем рекурсию и объявляем эту вершину листом.
+Когда дерево построено, каждому листу ставится в соответствие ответ. В
+случае с классификацией это может быть класс, к которому относится
+больше всего объектов в листе, или вектор вероятностей (скажем,
+вероятность класса может быть равна доле его объектов в листе). Для
+регрессии это может быть среднее значение, медиана или другая функция от
+целевых переменных объектов в листе. Выбор конкретной функции зависит от
+функционала качества в исходной задаче.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{18 - Почему с помощью бинарного решающего дерева можно достичь
+нулевой ошибки на обучающей выборке без повторяющихся
+объектов?}\label{ux43fux43eux447ux435ux43cux443-ux441-ux43fux43eux43cux43eux449ux44cux44e-ux431ux438ux43dux430ux440ux43dux43eux433ux43e-ux440ux435ux448ux430ux44eux449ux435ux433ux43e-ux434ux435ux440ux435ux432ux430-ux43cux43eux436ux43dux43e-ux434ux43eux441ux442ux438ux447ux44c-ux43dux443ux43bux435ux432ux43eux439-ux43eux448ux438ux431ux43aux438-ux43dux430-ux43eux431ux443ux447ux430ux44eux449ux435ux439-ux432ux44bux431ux43eux440ux43aux435-ux431ux435ux437-ux43fux43eux432ux442ux43eux440ux44fux44eux449ux438ux445ux441ux44f-ux43eux431ux44aux435ux43aux442ux43eux432}
+
+Каждому объекту в соответствие станет одна листовая вершина дерева.
+Однако такое дерево будет непригодно для обработки новых данных в силу
+переобучения, если не провести "стрижку".
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{19 - Как в общем случае выглядит критерий информативности? Как
+он используется для выбора предиката во внутренней вершине решающего
+дерева? Как вывести критерий Джини и энтропийный
+критерий?}\label{ux43aux430ux43a-ux432-ux43eux431ux449ux435ux43c-ux441ux43bux443ux447ux430ux435-ux432ux44bux433ux43bux44fux434ux438ux442-ux43aux440ux438ux442ux435ux440ux438ux439-ux438ux43dux444ux43eux440ux43cux430ux442ux438ux432ux43dux43eux441ux442ux438-ux43aux430ux43a-ux43eux43d-ux438ux441ux43fux43eux43bux44cux437ux443ux435ux442ux441ux44f-ux434ux43bux44f-ux432ux44bux431ux43eux440ux430-ux43fux440ux435ux434ux438ux43aux430ux442ux430-ux432ux43e-ux432ux43dux443ux442ux440ux435ux43dux43dux435ux439-ux432ux435ux440ux448ux438ux43dux435-ux440ux435ux448ux430ux44eux449ux435ux433ux43e-ux434ux435ux440ux435ux432ux430-ux43aux430ux43a-ux432ux44bux432ux435ux441ux442ux438-ux43aux440ux438ux442ux435ux440ux438ux439-ux434ux436ux438ux43dux438-ux438-ux44dux43dux442ux440ux43eux43fux438ux439ux43dux44bux439-ux43aux440ux438ux442ux435ux440ux438ux439}
+
+\emph{Критерий информативности \(H(R)\)} оценивает качество
+распределения целевой переменной среди объектов множества \(R\). Чем
+меньше разнообразие целевой переменной, тем меньше должно быть значение
+критерия информативности.
+
+\[H(R) = min_{c∈Y}\frac{1}{|R|}\sum_{(x_i,y_i)∈R}L(y_i, c)\]
+
+Пусть категориальный признак \(x_j\) имеет множество значений
+\(Q = {u1,...,uq}, |Q| = q\). Разобьем множество значений на два
+непересекающихся подмножества: \(Q = Q1⊔Q2\), и определим предикат как
+индикатор попадания в первое подмножество: \(β(x) = [xj ∈ Q1]\).
+
+Джини - при помощи критерия Бриера, оптимальный вектор вероятностей
+состоит из долей классов pk. Для энтропии - вспомним, что все значения
+ck должны суммироваться в единицу из методов оптимизации, для учёта
+этого ограничения необходимо искать минимум лагранжиана.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{20 - Для какой ошибки строится разложение на шум, смещение и
+разброс? Запишите формулу этой
+ошибки.}\label{ux434ux43bux44f-ux43aux430ux43aux43eux439-ux43eux448ux438ux431ux43aux438-ux441ux442ux440ux43eux438ux442ux441ux44f-ux440ux430ux437ux43bux43eux436ux435ux43dux438ux435-ux43dux430-ux448ux443ux43c-ux441ux43cux435ux449ux435ux43dux438ux435-ux438-ux440ux430ux437ux431ux440ux43eux441-ux437ux430ux43fux438ux448ux438ux442ux435-ux444ux43eux440ux43cux443ux43bux443-ux44dux442ux43eux439-ux43eux448ux438ux431ux43aux438.}
+
+Для ошибки алгоритма \(L(µ) = E_X[E_{x,y}[(y − µ(X)(x))^2]]\)
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{21 - Запишите формулы для шума, смещения и разброса метода
+обучения.}\label{ux437ux430ux43fux438ux448ux438ux442ux435-ux444ux43eux440ux43cux443ux43bux44b-ux434ux43bux44f-ux448ux443ux43cux430-ux441ux43cux435ux449ux435ux43dux438ux44f-ux438-ux440ux430ux437ux431ux440ux43eux441ux430-ux43cux435ux442ux43eux434ux430-ux43eux431ux443ux447ux435ux43dux438ux44f.}
+
+\emph{Шум} \(E_{x,y}[(y − E[y|x])^2]\)
+
+\emph{Смещение (variance)} \(E_x[(E_X[µ(X)] − E[y|x])^2]\)
+
+\emph{Разброс (bias)} \(E_x[E_X[(µ(X) − E_X[µ(X)])^2]]\)
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{22 - Приведите пример семейства алгоритмов с низким смещением и
+большим разбросом; семейства алгоритмов с большим смещением и низким
+разбросом. Поясните
+примеры.}\label{ux43fux440ux438ux432ux435ux434ux438ux442ux435-ux43fux440ux438ux43cux435ux440-ux441ux435ux43cux435ux439ux441ux442ux432ux430-ux430ux43bux433ux43eux440ux438ux442ux43cux43eux432-ux441-ux43dux438ux437ux43aux438ux43c-ux441ux43cux435ux449ux435ux43dux438ux435ux43c-ux438-ux431ux43eux43bux44cux448ux438ux43c-ux440ux430ux437ux431ux440ux43eux441ux43eux43c-ux441ux435ux43cux435ux439ux441ux442ux432ux430-ux430ux43bux433ux43eux440ux438ux442ux43cux43eux432-ux441-ux431ux43eux43bux44cux448ux438ux43c-ux441ux43cux435ux449ux435ux43dux438ux435ux43c-ux438-ux43dux438ux437ux43aux438ux43c-ux440ux430ux437ux431ux440ux43eux441ux43eux43c.-ux43fux43eux44fux441ux43dux438ux442ux435-ux43fux440ux438ux43cux435ux440ux44b.}
+
+1 - Деревья - из-за общей сложности и проблем с точной настройкой
+
+2 - Линейные классификаторы - из-за простоты ("как попадет", зато кучно)
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{23 - Что такое
+бэггинг?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux431ux44dux433ux433ux438ux43dux433}
+
+В \emph{бэггинге (bagging, bootstrap aggregation)} предлагается обучить
+некоторое число алгоритмов \(b_n(x)\) с помощью метода \(µ˜\), и
+построить итоговую композицию как среднее данных базовых алгоритмов:
+\[a_N(x) = \frac{1}{N}\sum_{n=1}^Nb_n(x) = \frac{1}{N}\sum_{n=1}^Nµ˜(X)(x)\]
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{24 - Что такое случайный лес? Чем он отличается от бэггинга над
+решающими
+деревьями?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux441ux43bux443ux447ux430ux439ux43dux44bux439-ux43bux435ux441-ux447ux435ux43c-ux43eux43d-ux43eux442ux43bux438ux447ux430ux435ux442ux441ux44f-ux43eux442-ux431ux44dux433ux433ux438ux43dux433ux430-ux43dux430ux434-ux440ux435ux448ux430ux44eux449ux438ux43cux438-ux434ux435ux440ux435ux432ux44cux44fux43cux438}
+
+Метод случайных лесов основан на бэггинге над решающими деревьями.
+Бэггинг сильнее уменьшает дисперсию базовых алгоритмов, если они слабо
+коррелированы. В случайных лесах корреляция между деревьями понижается
+путем рандомизации по двум направлениям: по объектам и по признакам.
+Во-первых, каждое дерево обучается по бутстрапированной подвыборке.
+Во-вторых, в каждой вершине разбиение ищется по подмножеству признаков -
+в случайных лесах признак, по которому производится разбиение,
+выбирается не из всех возможных признаков, а лишь из их случайного
+подмножества размера \(m\).
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{25 - Запишите вид композиции, которая обучается в градиентном
+бустинге. Как выбирают количество базовых алгоритмов в
+ней?}\label{ux437ux430ux43fux438ux448ux438ux442ux435-ux432ux438ux434-ux43aux43eux43cux43fux43eux437ux438ux446ux438ux438-ux43aux43eux442ux43eux440ux430ux44f-ux43eux431ux443ux447ux430ux435ux442ux441ux44f-ux432-ux433ux440ux430ux434ux438ux435ux43dux442ux43dux43eux43c-ux431ux443ux441ux442ux438ux43dux433ux435.-ux43aux430ux43a-ux432ux44bux431ux438ux440ux430ux44eux442-ux43aux43eux43bux438ux447ux435ux441ux442ux432ux43e-ux431ux430ux437ux43eux432ux44bux445-ux430ux43bux433ux43eux440ux438ux442ux43cux43eux432-ux432-ux43dux435ux439}
+
+\[a_N(x) = \sum_{n=0}^Nγ_nb_n(x)\]
+
+В композиции имеется начальный алгоритм \(b_0(x)\). Как правило,
+коэффициент \(γ_0\) при нем берут равным единице, а сам алгоритм
+выбирают очень простым, например:
+
+• нулевым \(b_0(x) = 0\)
+
+• возвращающим самый популярный класс (в задачах классификации):
+\(b_0(x) = arg max_{y∈Y} \sum{i=1}^ℓ[y_i = y]\)
+
+• возвращающим средний ответ (в задачах регрессии):
+\(b_0(x) = \frac{1}{ℓ} \sum{i=1}^ℓy_i\)
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{26 - Что такое сдвиги в градиентном бустинге? Как они
+вычисляются и для чего
+используются?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux441ux434ux432ux438ux433ux438-ux432-ux433ux440ux430ux434ux438ux435ux43dux442ux43dux43eux43c-ux431ux443ux441ux442ux438ux43dux433ux435-ux43aux430ux43a-ux43eux43dux438-ux432ux44bux447ux438ux441ux43bux44fux44eux442ux441ux44f-ux438-ux434ux43bux44f-ux447ux435ux433ux43e-ux438ux441ux43fux43eux43bux44cux437ux443ux44eux442ux441ux44f}
+
+Сдвиг \(s_i\) противоположен производной функции потерь в точке
+\(z = a_N−1(x_i)\). Вектор сдвигов \(s = (s1,...,sℓ)\) совпадает с
+антиградиентом
+
+\[s_i = −\frac{∂L}{∂z}|z=a_{N−1}(x_i)\]
+
+При таком выборе сдвигов si мы, по сути, сделаем один шаг градиентного
+спуска, двигаясь в сторону наискорейшего убывания ошибки на обучающей
+выборке.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{27 - Как обучается очередной базовый алгоритм в градиентном
+бустинге? Что такое сокращение
+шага?}\label{ux43aux430ux43a-ux43eux431ux443ux447ux430ux435ux442ux441ux44f-ux43eux447ux435ux440ux435ux434ux43dux43eux439-ux431ux430ux437ux43eux432ux44bux439-ux430ux43bux433ux43eux440ux438ux442ux43c-ux432-ux433ux440ux430ux434ux438ux435ux43dux442ux43dux43eux43c-ux431ux443ux441ux442ux438ux43dux433ux435-ux447ux442ux43e-ux442ux430ux43aux43eux435-ux441ux43eux43aux440ux430ux449ux435ux43dux438ux435-ux448ux430ux433ux430}
+
+\[bN (x) = arg min_{b∈A}\sum_{i=1}^ℓ(b(x_i) − s_i)^2\]
+
+\emph{Сокращение шага} - вместо перехода в оптимальную точку в
+направлении антиградиента делается укороченный шаг (\(η∈(0,1]\) - темп
+обучения) \[a_N(x) = a_{N−1}(x) + ηγ_N b_N (x)\]
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{28 - В чём заключается переподбор прогнозов в листьях решающих
+деревьев в градиентном
+бустинге?}\label{ux432-ux447ux451ux43c-ux437ux430ux43aux43bux44eux447ux430ux435ux442ux441ux44f-ux43fux435ux440ux435ux43fux43eux434ux431ux43eux440-ux43fux440ux43eux433ux43dux43eux437ux43eux432-ux432-ux43bux438ux441ux442ux44cux44fux445-ux440ux435ux448ux430ux44eux449ux438ux445-ux434ux435ux440ux435ux432ux44cux435ux432-ux432-ux433ux440ux430ux434ux438ux435ux43dux442ux43dux43eux43c-ux431ux443ux441ux442ux438ux43dux433ux435}
+
+\emph{Переподбор прогнозов} в листьях базовых решающих деревьев похож на
+применение метода Ньютона. Допустим, мы выбрали сдвиги si и обучили на
+них решающее дерево bn(x). После этого на объекте xi обучающей выборки
+будет сделан сдвиг bn(xi). Сдвиги будут одинаковыми на тех объектах,
+которые попали в один и тот же лист дерева. Если сделать переподбор, то
+сдвиги будут изменены так, чтобы как можно сильнее уменьшать исходный
+функционал ошибки. По сути, благодаря этому сдвиги подбираются
+индивидуально под группы объектов.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{29 - Как в xgboost выводится функционал ошибки с помощью
+разложения в ряд
+Тейлора?}\label{ux43aux430ux43a-ux432-xgboost-ux432ux44bux432ux43eux434ux438ux442ux441ux44f-ux444ux443ux43dux43aux446ux438ux43eux43dux430ux43b-ux43eux448ux438ux431ux43aux438-ux441-ux43fux43eux43cux43eux449ux44cux44e-ux440ux430ux437ux43bux43eux436ux435ux43dux438ux44f-ux432-ux440ux44fux434-ux442ux435ux439ux43bux43eux440ux430}
+
+Разложим функцию L в каждом слагаемом в ряд Тейлора до второго члена с
+центром в ответе композиции \(a_{N−1}(x_i)\):
+\[\sum_{i=1}^ℓL(y_i, a_{N−1}(x_i) + b(x_i)) == \sum_{i=1}^ℓL(y_i, a_{N−1}(x_i) + s_ib(x_i)+\frac{1}{2}h_ib^2(x_i))\]
+(через hi обозначены вторые производные по сдвигам). Первое слагаемое не
+зависит от нового базового алгоритма, и поэтому его можно выкинуть.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{30 - Какие регуляризации используются в
+xgboost?}\label{ux43aux430ux43aux438ux435-ux440ux435ux433ux443ux43bux44fux440ux438ux437ux430ux446ux438ux438-ux438ux441ux43fux43eux43bux44cux437ux443ux44eux442ux441ux44f-ux432-xgboost}
+
+\(b(x) = \sum_{j=1}^Jb_j[x ∈ R_j]\) - сложность зависит от двух
+показателей: 1. Число листьев J. Чем больше листьев имеет дерево, тем
+сложнее его разделяющая поверхность, тем больше у него параметров и тем
+выше риск переобучения. 2. Норма коэффициентов в листьях
+\(||b||_2^2 = \sum_{j=1}^J b_j^2\)
+
+Чем сильнее коэффициенты отличаются от нуля, тем сильнее данный базовый
+алгоритм будет влиять на итоговый ответ композиции. Добавляются
+регуляризаторы, штрафующие за оба этих вида сложности.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{31 - Опишите алгоритм обратного распространения ошибки для
+подсчёта производных в графе
+вычислений.}\label{ux43eux43fux438ux448ux438ux442ux435-ux430ux43bux433ux43eux440ux438ux442ux43c-ux43eux431ux440ux430ux442ux43dux43eux433ux43e-ux440ux430ux441ux43fux440ux43eux441ux442ux440ux430ux43dux435ux43dux438ux44f-ux43eux448ux438ux431ux43aux438-ux434ux43bux44f-ux43fux43eux434ux441ux447ux451ux442ux430-ux43fux440ux43eux438ux437ux432ux43eux434ux43dux44bux445-ux432-ux433ux440ux430ux444ux435-ux432ux44bux447ux438ux441ux43bux435ux43dux438ux439.}
+
+\emph{Обратное распространение ошибки (backprop)} - если каждый слой
+может вычислять производные по входу и по параметрам, то можно
+рекуррентно вычислить производные функционала по всем параметрам графа.
+Сначала вычисляются производные по параметрам самого последнего слоя,
+затем по параметрам предпоследнего и так далее до самого первого слоя.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{32 - Опишите алгоритм обучения графа
+вычислений.}\label{ux43eux43fux438ux448ux438ux442ux435-ux430ux43bux433ux43eux440ux438ux442ux43c-ux43eux431ux443ux447ux435ux43dux438ux44f-ux433ux440ux430ux444ux430-ux432ux44bux447ux438ux441ux43bux435ux43dux438ux439.}
+
+Как и во всех других методах машинного обучения, будем обучать параметры
+путём минимизации функционала ошибки:
+\[Q(w) = \sum_{i=1}^ℓL(y_i, a(x_i;w)) → min_w\] где w --- вектор,
+состоящий из параметров всех слоёв
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{33 - Что такое свёрточный слой? Что такое рекуррентный
+слой?}\label{ux447ux442ux43e-ux442ux430ux43aux43eux435-ux441ux432ux451ux440ux442ux43eux447ux43dux44bux439-ux441ux43bux43eux439-ux447ux442ux43e-ux442ux430ux43aux43eux435-ux440ux435ux43aux443ux440ux440ux435ux43dux442ux43dux44bux439-ux441ux43bux43eux439}
+
+Возникла идея обучения фильтров под конкретную задачу, что привело к
+появлению свёрточных слоёв и свёрточных нейронных сетей (convolutional
+neural networks). Устройство свёрточного слоя. Пусть дано изображение,
+представляющее собой функцию \(F(a, b)\), заданную на сетке размера
+\(p × q\). Если изображение является многоканальным (например, имеет
+несколько цветовых каналов), то дальнейшие действия проводятся для
+каждого канала в отдельности. Фильтром называется функция \(G(a, b)\),
+заданная на небольшой сетке \((−s,...,s) × (−t,...,t)\).
+
+Чтобы применить фильтр к изображению в точке \((i, j)\), необходимо
+вычислить их свёртку:
+\[f(i, j) = \sum_{k=−s}^s \sum_{l=−t}^tF(i + k, j + l)G(k, l)\] Вычислив
+свёртку в каждой точке, мы получим новое изображение \(f(i, j)\),
+которое и будет результатом работы свёрточного слоя.
+
+Свёрточные слои хорошо подходят для анализа изображений, поскольку
+учитывают их пространственную структуру. Текстовые данные представляют
+собой последовательный набор токенов (то есть символов, букв или других
+базовых элементов), для работы с ними применяются рекуррентные сети
+(recurrent neural networks), позволяющие обрабатывать такие
+последовательности.
+
+В рекуррентных слоях дополнительно появляется время --- в каждый
+следующий момент времени \(t\) на вход подаётся очередной токен \(x_t\)
+из входной последовательности. Также рекуррентный слой хранит скрытое
+состояние \(h_t\), которое позволяет «помнить» токены, которые поступали
+на вход ранее. В момент времени \(t\) происходит обновление скрытого
+состояния \(h_t = g_1(W_{xh}x_t + W_{hh}h_{t−1})\), после чего
+вычисляется выход \(f_t = g_2(W_{hy}h_t)\).
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{34 - Метод k ближайших соседей для регрессии и
+классификации.}\label{ux43cux435ux442ux43eux434-k-ux431ux43bux438ux436ux430ux439ux448ux438ux445-ux441ux43eux441ux435ux434ux435ux439-ux434ux43bux44f-ux440ux435ux433ux440ux435ux441ux441ux438ux438-ux438-ux43aux43bux430ux441ux441ux438ux444ux438ux43aux430ux446ux438ux438.}
+
+\emph{Алгоритм k ближайших соседей (k nearest neighbours, kNN)} относит
+объект \(u\) к тому классу, представителей которого окажется больше
+всего среди \(k\) его ближайших соседей.
+
+...
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{35 - Задача кластеризации. Метрики
+качества.}\label{ux437ux430ux434ux430ux447ux430-ux43aux43bux430ux441ux442ux435ux440ux438ux437ux430ux446ux438ux438.-ux43cux435ux442ux440ux438ux43aux438-ux43aux430ux447ux435ux441ux442ux432ux430.}
+
+Существует два подхода к измерению качества кластеризации: внутренний и
+внешний. Внутренний основан на некоторых свойствах выборки и кластеров,
+а внешний использует дополнительные данные --- например, информацию об
+истинных кластерах. Будем считать, что каждый кластер характеризуется
+своим центром \(c_k\).
+
+1 - Внутрикластерное расстояние:
+\(\sum_{k=1}^K\sum_{i=1}^ℓ[a(x_i) = k]ρ(x_i, c_k)\) - требуется
+минимизировать, в идеале все объекты кластера одинаковы
+
+2 - Межкластерное расстояние:
+\(\sum_{i,j=1}^ℓ[a(x_i) =/= a(x_j)]ρ(x_i, x_j)\) - нужно
+максимизировать, чтобы объекты из разных кластеров были не похожи
+
+3 - Индекс Данна (Dunn Index):
+\[\frac{min_{1<=k<k′<=K} d(k, k′)}{max_{1<=k<=K} d(k)}\], где
+\(d(k, k′)\) --- расстояние между кластерами \(k\) и \(k′\), а \(d(k)\)
+--- внутрикластерное расстояние для \(k\)-го кластера (например, сумма
+расстояний от всех объектов этого кластера до его центра). Данный индекс
+необходимо максимизировать.
+
+Внешние метрики возможно использовать, если известно истинное
+распределение объектов по кластерам. В этом случае задачу кластеризации
+можно рассматривать как задачу многоклассовой классификации, и
+использовать любую метрику оттуда --- F-меру с микро- или
+макро-усреднением.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{36 - Метод K-Means, вывод его
+шагов.}\label{ux43cux435ux442ux43eux434-k-means-ux432ux44bux432ux43eux434-ux435ux433ux43e-ux448ux430ux433ux43eux432.}
+
+\emph{K-Means} оптимизирует внутрикластерное расстояние, в котором
+используется квадрат евклидовой метрики. Две степени свободы: центры
+кластеров \(c_k\) и распределение объектов по кластерам \(a(x_i)\). Для
+этих величин выбирают произвольные начальные приближения, а затем
+оптимизируют: 1. Зафиксируем центры кластеров. В этом случае
+внутрикластерное расстояние будет минимальным, если каждый объект будет
+относиться к тому кластеру, чей центр является ближайшим:
+\[a(x_i) = arg min_{1<=k<=K}ρ(x_i, c_k)\] 2. Зафиксируем распределение
+объектов по кластерам. В этом случае внутрикластерное расстояние с
+квадратом евклидовой метрики можно продифференцировать по центрам
+кластеров и вывести аналитические формулы для них:
+\[c_k = \frac{1}{\sum_{i=1}^ℓ[a(x_i) = k]} \sum_{i=1}^ℓ[a(x_i) = k]x_i\]
+
+Повторяя эти шаги до сходимости, мы получим некоторое распределение
+объектов по кластерам. Новый объект относится к тому кластеру, чей центр
+является ближайшим. Результат работы метода K-Means существенно зависит
+от начального приближения.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{37 - Задача визуализации и метод
+t-SNE.}\label{ux437ux430ux434ux430ux447ux430-ux432ux438ux437ux443ux430ux43bux438ux437ux430ux446ux438ux438-ux438-ux43cux435ux442ux43eux434-t-sne.}
+
+\emph{Задача визуализации} состоит в отображении объектов в двух- или
+трёхмерное пространство с сохранением отношений между ними. Под
+сохранением отношений обычно понимают близость попарных расстояний в
+исходном и в новом пространствах.
+
+\emph{t-distributed stochastic neighbor embedding (t-SNE)} - заметим,
+что нам не так важно точное сохранение расстояний после проецирования
+--- достаточно лишь сохранить пропорции.
+
+1 - Используем нормальную плотность для измерения сходства объектов в
+исходном пространстве.
+
+2 - Нормируем близости так, чтобы получить вектор распределений
+расстояний от объекта \(x_j\) до всех остальных объектов.
+
+3 - Величины не являются симметричными, что может добавить
+дополнительных сложностей при дальнейшей работе. Симметризуем их.
+
+4 - Перейдём к измерению сходства в новом низкоразмерном пространстве.
+Известно, что в пространствах высокой размерности можно разместить
+объекты так, что их попарные расстояния будут близки --- а вот сохранить
+это свойство в низкоразмерном пространстве вряд ли возможно. Поэтому
+будем измерять сходства между объектами с помощью распределения Коши,
+которое имеет тяжёлые хвосты и не так сильно штрафует за увеличение
+расстояний между объектами.
+
+5 - Теперь мы умеем измерять расстояния между объектами как в исходном,
+так и в новом пространствах, и осталось лишь задать функционал ошибки
+проецирования. Будем измерять ошибку с помощью дивергенции
+Кульбака-Лейблера, которая часто используется для измерения расстояний
+между распределениями
+
+Решать данную задачу оптимизации можно, как всегда, с помощью
+стохастического градиентного спуска.
+
+P.S. Если потребуют формул - они сумасшедшие
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{38 - Обучение представлений слов и
+word2vec.}\label{ux43eux431ux443ux447ux435ux43dux438ux435-ux43fux440ux435ux434ux441ux442ux430ux432ux43bux435ux43dux438ux439-ux441ux43bux43eux432-ux438-word2vec.}
+
+В лингвистике существует дистрибутивная гипотеза, согласно которой
+слова, встречающиеся в похожих контекстах, имеют похожие смыслы. Будем
+строить представления для слов, опираясь на эту гипотезу: чем в более
+похожих контекстах встречаются два слова, тем ближе должны быть
+соответствующие им векторы.
+
+Итак, мы хотим для каждого слова \(w\) из словаря \(W\) найти вектор
+\(~w ∈ R^d\). Пусть дан некоторый текст \(x = (w_1...w_n)\). Контекстом
+слова \(w_j\) будем называть слова, находящиеся от него на расстоянии не
+более \(K\) --- то есть слова
+\(w_{j−K},...,w_{j−1}, w_{j+1},...,w_{j+K}\). Определим через векторы
+слов вероятность встретить слово \(w_i\) в контексте слова \(w_j\) ...
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{39 - Понижение размерности. Метод главных компонент: постановка
+задачи и
+решение.}\label{ux43fux43eux43dux438ux436ux435ux43dux438ux435-ux440ux430ux437ux43cux435ux440ux43dux43eux441ux442ux438.-ux43cux435ux442ux43eux434-ux433ux43bux430ux432ux43dux44bux445-ux43aux43eux43cux43fux43eux43dux435ux43dux442-ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438-ux438-ux440ux435ux448ux435ux43dux438ux435.}
+
+Одним из подходов к решению задачи уменьшения размерности признакового
+пространства является поиск новых признаков, каждый из которых является
+линейной комбинацией исходных признаков. В случае использования
+квадратичной функции ошибки при поиске такого приближения получается
+метод главных компонент \emph{(principal component analysis, PCA)}.
+
+Пусть \(X ∈ R^{ℓ×D}\) --- матрица «объекты-признаки», где \(ℓ\) ---
+число объектов, а \(D\) --- число признаков. Поставим задачу уменьшить
+размерность пространства до \(d\). Будем считать, что данные являются
+центрированными --- среднее в каждом столбце матрицы \(X\) равно нулю.
+Будем искать главные компоненты \(u_1,...,u_D ∈ R^D\), которые
+удовлетворяют следующим требованиям: 1. Они ортогональны:
+\(<u_i, u_j> = 0, i =/= j\); 2. Они нормированы: \(||u_i||^2 = 1\); 3.
+При проецировании выборки на компоненты \(u_1,...,u_d\) получается
+максимальная дисперсия среди всех возможных способов выбрать \(d\)
+компонент.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \section{40 - Постановка задачи построения рекомендаций. Коллаборативные
+методы: memory-based и на основе моделей со скрытыми переменными.
+Контентые
+методы.}\label{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438-ux43fux43eux441ux442ux440ux43eux435ux43dux438ux44f-ux440ux435ux43aux43eux43cux435ux43dux434ux430ux446ux438ux439.-ux43aux43eux43bux43bux430ux431ux43eux440ux430ux442ux438ux432ux43dux44bux435-ux43cux435ux442ux43eux434ux44b-memory-based-ux438-ux43dux430-ux43eux441ux43dux43eux432ux435-ux43cux43eux434ux435ux43bux435ux439-ux441ux43e-ux441ux43aux440ux44bux442ux44bux43cux438-ux43fux435ux440ux435ux43cux435ux43dux43dux44bux43cux438.-ux43aux43eux43dux442ux435ux43dux442ux44bux435-ux43cux435ux442ux43eux434ux44b.}
+
+\emph{memory-based} - два пользователя похожи, если они ставят товарам
+одинаковые оценки. Рассмотрим двух пользователей \(u\) и \(v\) Обозначим
+через \(I_{uv}\) множество товаров \(i\), для которых известны оценки
+обоих пользователей: \(I_{uv} = i ∈ I | ∃ r_{ui}\) \& \(∃ r_{vi}\),
+тогда сходство двух данных пользователей можно вычислить через
+корреляцию Пирсона.
+
+\emph{Модели со скрытыми переменными (latent factor models)} - будем
+пытаться построить для каждого пользователя \(u\) и товара \(i\) векторы
+\(p_u ∈ R^d\) и \(q_i ∈ R^d\), которые будут характеризовать «категории
+интересов». Например, каждую компоненту такого вектора можно
+интерпретировать как степень принадлежности данного товара к
+определённой категории или степень заинтересованности данного
+пользователя в этой категории.
+
+\emph{Контентные}. В коллаборативной фильтрации используется информация
+о предпочтении пользователей и об их сходствах, но при этом никак не
+используются свойства самих пользователей или товаров. При этом мы можем
+обладать дополнительными данными --- например, текстовыми описаниями или
+категориями товаров, данными из профиля пользователя. Из этих данных
+можно сформировать признаковое описание пары (пользователь, товар) и
+пытаться предсказывать рейтинг по этим признакам с помощью каких-либо
+моделей (линейных, композиций деревьев и т.д.).
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
